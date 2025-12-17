@@ -1,7 +1,5 @@
-import { prisma } from "@/lib/prisma";
-import { generateAccessToken, generateRefreshToken } from "@/lib/jwt";
-import bcrypt from "bcryptjs";
 import { z } from "zod";
+import { loginUser } from "@/services/auth.service";
 
 const loginSchema = z.object({
   email: z.email(),
@@ -10,50 +8,26 @@ const loginSchema = z.object({
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const result = loginSchema.safeParse(body);
+  const parsed = loginSchema.safeParse(body);
 
-  if (!result.success) {
-    return new Response(
-      JSON.stringify({ error: "Validation error" }),
-      {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      }
+  if (!parsed.success) {
+    return Response.json(
+      { error: "Validation error" },
+      { status: 400 }
     );
   }
 
-  const { email, password } = result.data;
+  try {
+    const tokens = await loginUser(
+      parsed.data.email,
+      parsed.data.password
+    );
 
-  const user = await prisma.user.findUnique({
-    where: { email },
-  });
-
-  if (!user) {
-    return new Response(
-      JSON.stringify({ error: "Invalid email or password" }),
+    return Response.json(tokens);
+  } catch {
+    return Response.json(
+      { error: "Invalid email or password" },
       { status: 401 }
     );
   }
-
-  const isValidPassword = await bcrypt.compare(
-    password,
-    user.passwordHash
-  );
-
-  if (!isValidPassword) {
-    return new Response(
-      JSON.stringify({ error: "Invalid email or password" }),
-      { status: 401 }
-    );
-  }
-
-  const payload = {
-    sub: user.id,
-    role: user.role,
-  };
-
-  return Response.json({
-    accessToken: generateAccessToken(payload),
-    refreshToken: generateRefreshToken(payload),
-  });
 }

@@ -1,41 +1,28 @@
-import {
-  verifyRefreshToken,
-  generateAccessToken,
-  generateRefreshToken,
-} from "@/lib/jwt";
+import { z } from "zod";
+import { refreshTokens } from "@/services/auth.service";
+
+const refreshSchema = z.object({
+  refreshToken: z.string().min(1),
+});
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const { refreshToken } = body;
+  const parsed = refreshSchema.safeParse(body);
 
-  if (!refreshToken) {
-    return new Response(
-      JSON.stringify({ error: "Refresh token required" }),
-      {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      }
+  if (!parsed.success) {
+    return Response.json(
+      { error: "Refresh token required" },
+      { status: 400 }
     );
   }
 
   try {
-    const payload = verifyRefreshToken(refreshToken);
-
-    const newPayload = {
-      sub: payload.sub,
-      role: payload.role,
-    };
-
-    return Response.json({
-      accessToken: generateAccessToken(newPayload)
-    });
+    const tokens = refreshTokens(parsed.data.refreshToken);
+    return Response.json(tokens);
   } catch {
-    return new Response(
-      JSON.stringify({ error: "Invalid or expired refresh token" }),
-      {
-        status: 401,
-        headers: { "Content-Type": "application/json" },
-      }
+    return Response.json(
+      { error: "Invalid refresh token" },
+      { status: 401 }
     );
   }
 }
