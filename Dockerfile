@@ -1,0 +1,14 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm install -g npm@11.7.0
+
+COPY . .
+
+RUN npx prisma generate
+
+EXPOSE 3000
+
+CMD sh -c "npx prisma migrate dev --name init && npm run dev"
