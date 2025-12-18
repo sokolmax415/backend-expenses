@@ -1,21 +1,26 @@
-import { verifyAccessToken } from "@/lib/jwt";
 
-export function getAuthUser(req: Request) {
-  const authHeader = req.headers.get("authorization");
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    throw new Error("UNAUTHORIZED");
+export function requireAdmin(req: Request) {
+  const userId = req.headers.get("x-user-id");
+  const role = req.headers.get("x-user-role");
+
+  if (!userId) {
+    return {
+      error: Response.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      ),
+    };
   }
 
-  const token = authHeader.slice(7);
-  const payload = verifyAccessToken(token);
-
-  if (!payload.sub) {
-    throw new Error("INVALID_TOKEN");
+  if (role !== "admin") {
+    return {
+      error: Response.json(
+        { error: "Forbidden" },
+        { status: 403 }
+      ),
+    };
   }
 
-  return {
-    userId: String(payload.sub),
-    role: payload.role as string | undefined,
-  };
+  return { userId };
 }
