@@ -9,7 +9,9 @@ export async function middleware(req: NextRequest) {
   // Проверяем, нужна ли авторизация для этого пути
   const needsAuth = 
     pathname.startsWith("/api/expenses") || 
-    pathname.startsWith("/api/categories");
+    pathname.startsWith("/api/categories") ||
+    pathname.startsWith("/api/users/me") ||
+    pathname.startsWith("/api/admin/users")
   
   if (!needsAuth) {
     return NextResponse.next();
@@ -50,5 +52,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/api/expenses/:path*", "/api/categories/:path*"],
+  matcher: ["/api/expenses/:path*", "/api/categories/:path*","/api/users/me","/api/admin/users/:path*"],
 };
