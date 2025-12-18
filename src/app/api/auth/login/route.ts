@@ -1,5 +1,8 @@
 import { z } from "zod";
 import { loginUser } from "@/services/auth.service";
+import {initDatabase} from "@/lib/init-db"
+
+let initialized = false;
 
 const loginSchema = z.object({
   email: z.email(),
@@ -7,6 +10,11 @@ const loginSchema = z.object({
 });
 
 export async function POST(req: Request) {
+  if (!initialized) {
+    await initDatabase();
+    initialized = true;
+  }
+
   const body = await req.json();
   const parsed = loginSchema.safeParse(body);
 
