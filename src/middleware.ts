@@ -23,7 +23,9 @@ export async function middleware(req: NextRequest) {
       pathname.startsWith("/api/categories") ||
       pathname.startsWith("/api/users/me") ||
       pathname.startsWith("/api/admin/users") ||
-      pathname.startsWith("/api/admin/categories") 
+      pathname.startsWith("/api/admin/categories")  ||
+      pathname.startsWith("/api/admin/dashboard") ||
+      pathname.startsWith("/api/admin/reports") 
     
     if (!needsAuth) {
       return NextResponse.next();
@@ -74,5 +76,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/api/expenses/:path*", "/api/categories/:path*","/api/users/me","/api/admin/users/:path*","/api/auth/:path*","/api/admin/categories/:path*"],
+  matcher: ["/api/expenses/:path*", "/api/categories/:path*","/api/users/me","/api/admin/users/:path*","/api/auth/:path*","/api/admin/categories/:path*","/api/admin/dashboard","/api/admin/reports"],
 };
