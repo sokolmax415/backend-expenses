@@ -19,7 +19,12 @@ export async function GET(req: Request) {
     if ("error" in auth) return auth.error;
 
     const users = await getAllUsers();
-    return Response.json(users);
+    return Response.json(users, {
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      } });
 }
 
 export async function POST(req: Request) {

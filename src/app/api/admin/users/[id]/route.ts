@@ -10,7 +10,12 @@ export async function DELETE(
   const {id} = await params
 
   await deleteUser(id);
-  return new Response(null, { status: 200 });
+  return new Response(null, { status: 200,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      } });
 }
 
 export async function GET(
@@ -27,7 +32,12 @@ export async function GET(
   if (!user) {
     return Response.json(
       { error: "User not found" },
-      { status: 404 }
+      { status: 404,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      } }
     );
   }
 
