@@ -10,11 +10,12 @@ export async function DELETE(
   const {id} = await params
 
   await deleteUser(id);
-  return new Response(null, { status: 200,
+  return Response.json({ success: true, message: "User deleted successfully" }, { status: 200,
         headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type',
+        'Content-Type': 'application/json'
       } });
 }
 
@@ -41,5 +42,9 @@ export async function GET(
     );
   }
 
-  return Response.json(user);
+  return Response.json(user, { headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      } });
 }

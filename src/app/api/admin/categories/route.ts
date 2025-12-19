@@ -20,7 +20,12 @@ export async function GET(req: Request) {
   if ("error" in auth) return auth.error;
 
   const categories = await getAllCategories();
-  return Response.json(categories);
+  return Response.json(categories, {headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS, GET',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Content-Type': 'application/json'
+      }});
 }
 
 export async function POST(req: Request) {
@@ -44,7 +49,12 @@ export async function POST(req: Request) {
 
   try {
     const category = await createCategory(parsed.data);
-    return Response.json(category, { status: 201 });
+    return Response.json(category, { status: 201,headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Content-Type': 'application/json'
+      } });
   } catch (e) {
     return Response.json(
       { error: "Category already exists" },
