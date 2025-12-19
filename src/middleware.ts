@@ -34,7 +34,12 @@ export async function middleware(req: NextRequest) {
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return NextResponse.json(
         { error: "Unauthorized" },
-        { status: 401 }
+        { status: 401,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        } }
       );
     }
 
@@ -58,7 +63,12 @@ export async function middleware(req: NextRequest) {
       console.error("Token verification failed:", error);
       return NextResponse.json(
         { error: "Invalid token" },
-        { status: 401 }
+        { status: 401,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        } }
       );
     }
 }
