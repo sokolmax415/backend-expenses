@@ -13,7 +13,12 @@ export async function GET(req: Request) {
   console.log("User-id",userId)
 
   const expenses = await getExpenses(userId);
-  return Response.json(expenses);
+  return Response.json(expenses, {
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS, GET',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }  });
 }
 
 export async function POST(req: Request) {

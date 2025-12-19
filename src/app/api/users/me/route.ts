@@ -17,7 +17,7 @@ export async function GET(req: Request) {
         { status: 404,
         headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS, GET',
         'Access-Control-Allow-Headers': 'Content-Type',
       }  }
         );
@@ -38,7 +38,7 @@ export async function PUT(req: Request) {
         { status: 400,
         headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS, PUT',
         'Access-Control-Allow-Headers': 'Content-Type',
       }  }
         );
@@ -50,7 +50,7 @@ export async function PUT(req: Request) {
         { status: 400,
         headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS, PUT',
         'Access-Control-Allow-Headers': 'Content-Type',
       }  }
         );
@@ -66,7 +66,7 @@ export async function PUT(req: Request) {
         { status: 400,
         headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS, PUT',
         'Access-Control-Allow-Headers': 'Content-Type',
       }  }
         );

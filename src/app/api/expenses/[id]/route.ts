@@ -25,7 +25,7 @@ export async function PUT(
         { status: 400,
         headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS, PUT',
         'Access-Control-Allow-Headers': 'Content-Type',
       }  }
         );
@@ -45,7 +45,7 @@ export async function PUT(
             { status: 404,
         headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS, PUT',
         'Access-Control-Allow-Headers': 'Content-Type',
       }  }
         );
@@ -66,7 +66,7 @@ export async function DELETE(
         return new Response(null, { status: 200,
         headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS, DELETE',
         'Access-Control-Allow-Headers': 'Content-Type',
       }  });
     } catch (e) {
@@ -76,7 +76,7 @@ export async function DELETE(
             { status: 404 ,
         headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS, DELETE',
         'Access-Control-Allow-Headers': 'Content-Type',
       } }
         );
