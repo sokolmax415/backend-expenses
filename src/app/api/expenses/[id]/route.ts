@@ -37,7 +37,11 @@ export async function PUT(
         userId,
         result.data
         );
-        return Response.json(expense);
+        return Response.json(expense, {headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS, PUT',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }  });
     } catch (e) {
         if ((e as Error).message === "NOT_FOUND") {
         return Response.json(

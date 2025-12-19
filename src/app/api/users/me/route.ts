@@ -23,7 +23,11 @@ export async function GET(req: Request) {
         );
     }
 
-    return Response.json(user);
+    return Response.json(user, {headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS, GET',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }  });
 }
 
 export async function PUT(req: Request) {
@@ -59,7 +63,11 @@ export async function PUT(req: Request) {
     try {
         const userId = req.headers.get("x-user-id")!;
         const user = await updateMe(userId, parsed.data);
-        return Response.json(user);
+        return Response.json(user, {headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS, GET',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }  });
     } catch (e) {
         return Response.json(
         { error: "Update failed" },
