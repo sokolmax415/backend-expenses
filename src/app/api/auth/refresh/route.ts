@@ -12,7 +12,12 @@ export async function POST(req: Request) {
   if (!parsed.success) {
     return Response.json(
       { error: "Refresh token required" },
-      { status: 400 }
+      { status: 400 ,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }}
     );
   }
 
@@ -22,7 +27,12 @@ export async function POST(req: Request) {
   } catch {
     return Response.json(
       { error: "Invalid refresh token" },
-      { status: 401 }
+      { status: 401,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }  }
     );
   }
 }

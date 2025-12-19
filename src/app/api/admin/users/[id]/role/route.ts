@@ -15,11 +15,21 @@ export async function PUT(
   if (!parsed.success) {
     return Response.json(
       { error: "Validation error" },
-      { status: 400 }
+      { status: 400,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }  }
     );
   }
 
   const {id} = await params
   const user = await updateUserRole(id, parsed.data.role);
-  return Response.json(user);
+  return Response.json(user, {
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      } });
 }

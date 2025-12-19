@@ -21,7 +21,12 @@ export async function POST(req: Request) {
   if (!parsed.success) {
     return Response.json(
       { error: "Validation error" },
-      { status: 400 }
+      { status: 400,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      } }
     );
   }
 
@@ -31,11 +36,21 @@ export async function POST(req: Request) {
       parsed.data.password
     );
 
-    return Response.json(tokens);
+    return Response.json(tokens, {
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }});
   } catch {
     return Response.json(
       { error: "Invalid email or password" },
-      { status: 401 }
+      { status: 401,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      } }
     );
   }
 }

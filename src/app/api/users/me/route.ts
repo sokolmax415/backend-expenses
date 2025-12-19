@@ -14,7 +14,12 @@ export async function GET(req: Request) {
     if (!user) {
         return Response.json(
         { error: "User not found" },
-        { status: 404 }
+        { status: 404,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }  }
         );
     }
 
@@ -30,14 +35,24 @@ export async function PUT(req: Request) {
     if (!parsed.success) {
         return Response.json(
         { error: "Validation error" },
-        { status: 400 }
+        { status: 400,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }  }
         );
     }
 
     if (Object.keys(parsed.data).length === 0) {
         return Response.json(
         { error: "Nothing to update" },
-        { status: 400 }
+        { status: 400,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }  }
         );
     }
 
@@ -48,7 +63,12 @@ export async function PUT(req: Request) {
     } catch (e) {
         return Response.json(
         { error: "Update failed" },
-        { status: 400 }
+        { status: 400,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }  }
         );
     }
 }

@@ -25,10 +25,20 @@ export async function POST(req: Request) {
   if (!result.success) {
     return Response.json(
       { error: "Validation error" },
-      { status: 400 }
+      { status: 400,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }  }
     );
   }
 
   const expense = await createExpense(userId, result.data);
-  return Response.json(expense, { status: 201 });
+  return Response.json(expense, { status: 201,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }  });
 }

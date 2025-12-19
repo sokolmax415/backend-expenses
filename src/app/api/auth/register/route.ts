@@ -14,7 +14,12 @@ export async function POST(req: Request) {
   if (!parsed.success) {
     return Response.json(
       { error: "Validation error" },
-      { status: 400 }
+      { status: 400,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      } }
     );
   }
 
@@ -30,7 +35,12 @@ export async function POST(req: Request) {
     if ((e as Error).message === "USER_EXISTS") {
       return Response.json(
         { error: "User already exists" },
-        { status: 409 }
+        { status: 409,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }  }
       );
     }
 

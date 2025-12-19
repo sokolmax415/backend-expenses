@@ -22,7 +22,12 @@ export async function PUT(
     if (!result.success) {
         return Response.json(
         { error: "Validation error" },
-        { status: 400 }
+        { status: 400,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }  }
         );
     }
 
@@ -37,7 +42,12 @@ export async function PUT(
         if ((e as Error).message === "NOT_FOUND") {
         return Response.json(
             { error: "Expense not found" },
-            { status: 404 }
+            { status: 404,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }  }
         );
         }
         throw e;
@@ -53,12 +63,22 @@ export async function DELETE(
 
     try {
         await deleteExpense(id, userId);
-        return new Response(null, { status: 200 });
+        return new Response(null, { status: 200,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }  });
     } catch (e) {
         if ((e as Error).message === "NOT_FOUND") {
         return Response.json(
             { error: "Expense not found" },
-            { status: 404 }
+            { status: 404 ,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      } }
         );
         }
         throw e;
