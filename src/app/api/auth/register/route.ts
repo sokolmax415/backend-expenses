@@ -30,7 +30,11 @@ export async function POST(req: Request) {
       parsed.data.name
     );
 
-    return Response.json(tokens);
+    return Response.json(tokens, {headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      }  });
   } catch (e) {
     if ((e as Error).message === "USER_EXISTS") {
       return Response.json(

@@ -22,7 +22,7 @@ export async function PUT(
       { status: 400,
         headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS, PUT',
         'Access-Control-Allow-Headers': 'Content-Type',
       }  }
     );
@@ -34,7 +34,11 @@ export async function PUT(
       id,
       parsed.data
     );
-    return Response.json(category);
+    return Response.json(category,{headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS, PUT',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      } });
   } catch (e) {
     if ((e as Error).message === "NOT_FOUND") {
       return Response.json(
@@ -42,7 +46,7 @@ export async function PUT(
         { status: 404,
         headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS, PUT',
         'Access-Control-Allow-Headers': 'Content-Type',
       }  }
       );
@@ -62,7 +66,11 @@ export async function DELETE(
     try {
         const {id} = await params
         await deleteCategory(id);
-        return new Response(null, { status: 200 });
+        return new Response(null, { status: 200,headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS, DELETE',
+            'Access-Control-Allow-Headers': 'Content-Type',
+        } });
     } catch (e) {
         if ((e as Error).message === "NOT_FOUND") {
         return Response.json(
@@ -70,7 +78,7 @@ export async function DELETE(
             { status: 404,
             headers: {
             'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS, DELETE',
             'Access-Control-Allow-Headers': 'Content-Type',
         }  }
         );
